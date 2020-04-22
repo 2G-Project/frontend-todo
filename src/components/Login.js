@@ -4,11 +4,10 @@ import axios from 'axios';
 class Login extends Component {
   state = {
     username: '',
-    email: '',
-    password: ''
+    password: '',
   };
 
-  inputChangeHandler = e => {
+  inputChangeHandler = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
@@ -18,9 +17,9 @@ class Login extends Component {
     this.setState({
       username: username,
       email: email,
-      password: password
+      password: password,
     });
-    const herokurl = 'https://team5-mud.herokuapp.com';
+    const herokurl = '';
     console.log('this state', this.state);
 
     axios({
@@ -29,21 +28,20 @@ class Login extends Component {
       data: {
         username: `${this.state.username}`,
         password: `${this.state.password}`,
-        email: `${this.state.email}`
-      }
+      },
     })
-      .then(res => {
+      .then((res) => {
         console.log('response', res);
         const token = res.data['key'];
         localStorage.setItem('token', `Token ${token}`);
         this.props.history.push('/');
       })
-      .catch(err => {
+      .catch((err) => {
         console.log('Axios error:', err);
       });
   };
 
-  submitHandler = ev => {
+  submitHandler = (ev) => {
     ev.preventDefault();
     this.submitValues(this.state);
   };
@@ -51,7 +49,7 @@ class Login extends Component {
   render() {
     return (
       <div className='login-div'>
-        <form data-testid='form' onSubmit={e => this.submitHandler(e)}>
+        <form data-testid='form' onSubmit={(e) => this.submitHandler(e)}>
           <h1>Login</h1>
           <input
             placeholder='Username'
@@ -71,7 +69,7 @@ class Login extends Component {
             <input
               type='submit'
               value='Login'
-              onClick={e => this.submitHandler(e)}
+              onClick={(e) => this.submitHandler(e)}
             ></input>
           </p>
         </form>
