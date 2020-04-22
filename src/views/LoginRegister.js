@@ -4,7 +4,7 @@ import Register from '../components/Register.js';
 
 const LoginRegister = (props) => {
   return (
-    <div class='login'>
+    <div className='login'>
       <Login {...props} />
       <Register {...props} />
     </div>

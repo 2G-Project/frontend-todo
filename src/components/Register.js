@@ -13,8 +13,8 @@ class Register extends Component {
     this.setState({ [name]: value });
   };
 
-  submitValues = ({ username, email, password1, password2 }) => {
-    console.log({ username, email, password1, password2 });
+  submitValues = ({ username, password1, password2 }) => {
+    console.log({ username, password1, password2 });
     this.setState({
       username: username,
       password1: password1,
@@ -35,7 +35,7 @@ class Register extends Component {
       .then((res) => {
         console.log('response', res);
         const token = res.data['key'];
-        localStorage.setItem('token', `Token ${token}`);
+        localStorage.setItem('token', `${token}`);
         this.props.history.push('/');
       })
       .catch((err) => {
@@ -62,7 +62,7 @@ class Register extends Component {
 
   render() {
     return (
-      <div class='register-div'>
+      <div className='register-div'>
         <form onSubmit={(e) => this.submitHandler(e)}>
           <h1>Register</h1>
           <input

@@ -7,10 +7,10 @@ import './styles/App.scss';
 
 function App() {
   return (
-    <Router>
+    <div>
       <Route path='/login' component={LoginRegister} />
-      <PrivateRoute path='/' component={TodoList} />
-    </Router>
+      <PrivateRoute exact path='/' component={TodoList} />
+    </div>
   );
 }
 
