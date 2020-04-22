@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Todo from '../components/Todo';
+import AddTodoForm from '../components/AddTodoForm';
 import axios from 'axios';
 
 const TodoList = (props) => {
@@ -45,15 +46,46 @@ const TodoList = (props) => {
   const clearCompletedTodos = () => {
     const testURL = 'http://localhost:5000/api/';
     const token = localStorage.getItem('token');
+    const todosData = { todos };
 
     axios({
       url: `${testURL}todos/update`,
       method: 'POST',
-      data: todos,
+      data: todosData,
       headers: {
         'Content-Type': 'application/json',
         Authorization: `${token}`,
       },
+    })
+      .then((res) => {
+        setTodos(
+          todos.filter((todo) => {
+            if (todo.is_complete === 1) {
+              return false;
+            } else {
+              return true;
+            }
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const addTodo = (todoText) => {
+    const token = localStorage.getItem('token');
+    const testURL = 'http://localhost:5000/api/';
+    let newTodo = { text: todoText };
+
+    axios({
+      url: `${testURL}todos`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${token}`,
+      },
+      data: newTodo,
     })
       .then((res) => {
         setTodos(res.data.todos);
@@ -74,6 +106,7 @@ const TodoList = (props) => {
           return <Todo key={todo.id} todo={todo} completeTodo={completeTodo} />;
         })}
       </div>
+      <AddTodoForm addTodo={addTodo} />
       <button onClick={clearCompletedTodos}>Clear Completed Todos</button>
     </div>
   );
