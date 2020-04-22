@@ -6,10 +6,6 @@ import TodoList from './views/TodoList.js';
 import './styles/App.scss';
 
 function App() {
-  const [todos, setTodos] = useState([]);
-
-  useEffect(() => {}, []);
-
   return (
     <Router>
       <Route path='/login' component={LoginRegister} />
