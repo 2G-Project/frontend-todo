@@ -1,9 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import Todo from '../components/Todo';
+import AppBar from '../components/AppBar.js';
 import AddTodoForm from '../components/AddTodoForm';
+import {
+  Box,
+  Container,
+  Paper,
+  Toolbar,
+  Typography,
+  Button,
+} from '@material-ui/core';
+import DoneIcon from '@material-ui/icons/Done';
+import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(1, 1),
+  },
+  clearButton: {
+    margin: theme.spacing(1),
+    background: 'red',
+  },
+  title: {
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'block',
+    },
+  },
+}));
+
 const TodoList = (props) => {
+  const classes = useStyles();
   const [todos, setTodos] = useState([
     { text: 'test', is_complete: 0 },
     { text: 'test2', is_complete: 1 },
@@ -12,7 +40,6 @@ const TodoList = (props) => {
   useEffect(() => {
     const testURL = 'http://localhost:5000/api/';
     const token = localStorage.getItem('token');
-
     axios({
       url: `${testURL}todos`,
       method: 'GET',
@@ -39,7 +66,6 @@ const TodoList = (props) => {
         }
       })
     );
-
     console.log(todos);
   };
 
@@ -47,7 +73,6 @@ const TodoList = (props) => {
     const testURL = 'http://localhost:5000/api/';
     const token = localStorage.getItem('token');
     const todosData = { todos };
-
     axios({
       url: `${testURL}todos/update`,
       method: 'POST',
@@ -77,7 +102,6 @@ const TodoList = (props) => {
     const token = localStorage.getItem('token');
     const testURL = 'http://localhost:5000/api/';
     let newTodo = { text: todoText };
-
     axios({
       url: `${testURL}todos`,
       method: 'POST',
@@ -96,18 +120,55 @@ const TodoList = (props) => {
   };
 
   return (
-    <div className='todo-list'>
-      <h1>What do I need to do?</h1>
-      <h5>To Do Items</h5>
-      <p>Check off completed items</p>
-
-      <div className='todos'>
-        {todos.map((todo) => {
-          return <Todo key={todo.id} todo={todo} completeTodo={completeTodo} />;
-        })}
-      </div>
-      <AddTodoForm addTodo={addTodo} />
-      <button onClick={clearCompletedTodos}>Clear Completed Todos</button>
+    <div className='todo-list-div'>
+      <Box display='flex' flexWrap='nowrap' justifyContent='center'>
+        <AddTodoForm addTodo={addTodo} />
+      </Box>
+      <Box display='flex' flexWrap='nowrap' p={1} m={1} justifyContent='center'>
+        <Paper
+          className={classes.root}
+          elevation={8}
+          style={{ padding: 0, width: 800, height: 400, overflow: 'auto' }}
+        >
+          <div className='todo-list'>
+            {todos.length > 0 ? (
+              <div className='todos'>
+                {todos.map((todo) => {
+                  return (
+                    <Todo
+                      key={todo.id}
+                      todo={todo}
+                      completeTodo={completeTodo}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignContent: 'center',
+                }}
+              >
+                <Typography className={classes.title} variant='h5' noWrap>
+                  Your Todos will appear here...
+                </Typography>
+              </div>
+            )}
+          </div>
+        </Paper>
+      </Box>
+      <Button
+        variant='contained'
+        color='secondary'
+        className={classes.clearButton}
+        startIcon={<DoneIcon />}
+        style={{ justifyContent: 'center' }}
+        onClick={() => clearCompletedTodos()}
+      >
+        Clear Completed
+      </Button>
     </div>
   );
 };
