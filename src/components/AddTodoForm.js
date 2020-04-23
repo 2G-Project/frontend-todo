@@ -63,13 +63,13 @@ const AddTodoForm = (props) => {
   return (
     <Paper style={{ margin: 16, padding: 16, width: 800 }}>
       <form onSubmit={(e) => handleSubmit()}>
-      <ListItem divider={props.divider}> 
-            
+      <ListItem divider={props.divider}>             
             <input
-            placeholder="...add todo"                                                       
-            value={todoText}
-            onChange={(e) => setTodoText(e.target.value)}           
-            style={{ width: 600 }} />            
+              placeholder="...add todo"                                                       
+              value={todoText}
+              onChange={(e) => setTodoText(e.target.value)}
+              maxlength="100"           
+              style={{ width: 600 }} />            
                   
             <Button 
               fullwidth 
