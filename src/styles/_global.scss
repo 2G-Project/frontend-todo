@@ -2,6 +2,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+
 html,
 body,
 div,
@@ -104,21 +105,17 @@ nav,
 section {
   display: block;
 }
-
 body {
   line-height: 1;
 }
-
 ol,
 ul {
   list-style: none;
 }
-
 blockquote,
 q {
   quotes: none;
 }
-
 blockquote:before,
 blockquote:after,
 q:before,
@@ -126,33 +123,67 @@ q:after {
   content: '';
   content: none;
 }
-
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-.form-div {
+.form-div{
   display: flex;
   flex-wrap: nowrap;
   width: 100%;
+
   .textfield-div {
     display: flex;
     flex-wrap: nowrap;
     width: 50%;
     height: auto;
   }
-  .button-div {
+
+  .button-div{
     display: flex;
     flex-wrap: nowrap;
     width: 50%;
     height: auto;
-  }
+  } 
 }
-.todo-list-div {
+
+.todo-list-div{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
+
+  @media (max-width: 800px) {
+    width: auto;
+    height: auto;
+  }
+
+  @media (max-width: 500px) {
+    width: auto;
+    height: auto;
+  }
 }
+
+/*input {
+  width: 90%;
+  height: 2rem;
+  font-size: 1.3rem;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  text-align: center; 
+  border: 1px solid gray;
+}*/
+
+input {
+  outline: 0;
+  border-width: 0 0 2px;
+  border-color: gray;
+  height: 2rem;
+  font-size: 1.3rem;
+  text-align: center; 
+}
+
+

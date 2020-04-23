@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     display: 'none',
+
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 const TodoList = (props) => {
   const classes = useStyles();
+
   const [todos, setTodos] = useState([
     { text: 'test', is_complete: 0 },
     { text: 'test2', is_complete: 1 },
@@ -40,6 +42,7 @@ const TodoList = (props) => {
   useEffect(() => {
     const testURL = 'http://localhost:5000/api/';
     const token = localStorage.getItem('token');
+
     axios({
       url: `${testURL}todos`,
       method: 'GET',
@@ -66,6 +69,7 @@ const TodoList = (props) => {
         }
       })
     );
+
     console.log(todos);
   };
 
@@ -73,6 +77,7 @@ const TodoList = (props) => {
     const testURL = 'http://localhost:5000/api/';
     const token = localStorage.getItem('token');
     const todosData = { todos };
+
     axios({
       url: `${testURL}todos/update`,
       method: 'POST',
@@ -98,10 +103,41 @@ const TodoList = (props) => {
       });
   };
 
+  const deleteTodo = (id) => {
+    const testURL = 'http://localhost:5000/api/';
+    const token = localStorage.getItem('token');
+    const todosData = { todos };
+
+    axios({
+      url: `${testURL}todos/delete`,
+      method: 'DELETE',
+      data: todosData,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${token}`,
+      },
+    })
+      .then((res) => {
+        setTodos(
+          todos.filter((todo) => {
+            if (todo.id === id) {
+              return false;
+            } else {
+              return true;
+            }
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const addTodo = (todoText) => {
     const token = localStorage.getItem('token');
     const testURL = 'http://localhost:5000/api/';
     let newTodo = { text: todoText };
+
     axios({
       url: `${testURL}todos`,
       method: 'POST',
@@ -139,6 +175,7 @@ const TodoList = (props) => {
                       key={todo.id}
                       todo={todo}
                       completeTodo={completeTodo}
+                      deleteTodo={deleteTodo}
                     />
                   );
                 })}
@@ -148,7 +185,7 @@ const TodoList = (props) => {
                 style={{
                   display: 'flex',
                   justifyContent: 'center',
-                  alignContent: 'center',
+                  marginTop: '25%',
                 }}
               >
                 <Typography className={classes.title} variant='h5' noWrap>
@@ -159,6 +196,7 @@ const TodoList = (props) => {
           </div>
         </Paper>
       </Box>
+
       <Button
         variant='contained'
         color='secondary'

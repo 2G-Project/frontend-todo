@@ -10,6 +10,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import Tooltip from '@material-ui/core/Tooltip';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -26,30 +27,6 @@ const useStyles = makeStyles((theme) => ({
   },
   tooltip: {
     fontSize: 16,
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: 'auto',
-    },
-  },
-  searchIcon: {
-    width: theme.spacing(7),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   inputRoot: {
     color: 'inherit',
@@ -84,24 +61,35 @@ export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const history = useHistory();
+
+  const logoutHandler = (e) => {
+    e.preventDefault();
+    localStorage.clear();
+    history.push('/');
+  };
+
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
+
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
+
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
-
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -139,12 +127,16 @@ export default function PrimarySearchAppBar(props) {
           <Typography className={classes.title} variant='h5' noWrap>
             What do I need to do today?
           </Typography>
+
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             {/*LOGOUT ICON*/}
             <IconButton aria-label='Log Out' color='inherit'>
               <Tooltip title='Log Out' classes={classes} arrow>
-                <ExitToAppIcon className={classes.largeIcon} />
+                <ExitToAppIcon
+                  onClick={(e) => logoutHandler(e)}
+                  className={classes.largeIcon}
+                />
               </Tooltip>
             </IconButton>
           </div>
