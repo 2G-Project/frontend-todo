@@ -70,7 +70,6 @@ const AddTodoForm = (props) => {
           />
 
           <Button
-            fullwidth
             color='secondary'
             className={classes.addButton}
             variant='contained'

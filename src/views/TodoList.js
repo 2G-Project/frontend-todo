@@ -61,8 +61,6 @@ const TodoList = (props) => {
         }
       })
     );
-
-    console.log(todos);
   };
 
   const clearCompletedTodos = () => {
