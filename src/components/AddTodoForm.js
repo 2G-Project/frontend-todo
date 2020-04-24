@@ -65,7 +65,7 @@ const AddTodoForm = (props) => {
             placeholder='...add todo'
             value={todoText}
             onChange={(e) => setTodoText(e.target.value)}
-            maxLength='100'
+            maxLength='50'
             style={{ width: 600 }}
           />
 
