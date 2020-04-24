@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 const Login = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState(null);
   const history = useHistory();
 
   const handleSubmit = (e) => {
@@ -26,7 +27,11 @@ const Login = (props) => {
         history.push('/');
       })
       .catch((err) => {
-        console.log(err.response);
+        const errResponse = err.response.data;
+        console.log(errResponse);
+        if (errResponse.username || errResponse.password) {
+          setErrorMsg('Invalid credentials.');
+        }
       });
   };
 
@@ -54,6 +59,9 @@ const Login = (props) => {
             console.log(password);
           }}
         ></input>
+        {errorMsg ? (
+          <p style={{ color: 'red', fontSize: '12px' }}>{errorMsg}</p>
+        ) : null}
         <p>
           <input type='submit' value='Login' onClick={handleSubmit}></input>
         </p>
