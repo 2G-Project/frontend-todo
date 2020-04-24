@@ -26,10 +26,7 @@ const useStyles = makeStyles((theme) => ({
 const TodoList = (props) => {
   const classes = useStyles();
 
-  const [todos, setTodos] = useState([
-    { text: 'test', is_complete: 0 },
-    { text: 'test2', is_complete: 1 },
-  ]);
+  const [todos, setTodos] = useState([]);
 
   useEffect(() => {
     const testURL = 'http://localhost:5000/api/';

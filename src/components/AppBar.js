@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import Tooltip from '@material-ui/core/Tooltip';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { useHistory } from 'react-router';
@@ -24,9 +23,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
-  },
-  tooltip: {
-    fontSize: 16,
   },
   inputRoot: {
     color: 'inherit',
@@ -65,13 +61,11 @@ export default function PrimarySearchAppBar(props) {
 
   const logoutHandler = (e) => {
     e.preventDefault();
-    console.log('local storage before clear', localStorage.getItem('token'));
     localStorage.clear();
-    console.log('local storage after clear', localStorage.getItem('token'));
     history.push('/');
   };
 
-  const isMenuOpen = Boolean(anchorEl);
+  // const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
@@ -82,10 +76,10 @@ export default function PrimarySearchAppBar(props) {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
+  // const handleMenuClose = () => {
+  //   setAnchorEl(null);
+  //   handleMobileMenuClose();
+  // };
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -105,15 +99,13 @@ export default function PrimarySearchAppBar(props) {
       {localStorage.getItem('token') ? (
         /*LOGOUT ICON*/
         <MenuItem onClick={handleProfileMenuOpen}>
-          <IconButton aria-label='Log Out' color='inherit'>
-            <Tooltip title='Log Out' classes={classes} arrow>
-              <ExitToAppIcon
-                onClick={(e) => logoutHandler(e)}
-                className={classes.largeIcon}
-              />
-            </Tooltip>
+          <IconButton
+            onClick={(e) => logoutHandler(e)}
+            aria-label='Log Out'
+            color='inherit'
+          >
+            <ExitToAppIcon className={classes.largeIcon} />
           </IconButton>
-          <p>Logout</p>
         </MenuItem>
       ) : null}
     </Menu>
@@ -139,13 +131,12 @@ export default function PrimarySearchAppBar(props) {
           <div className={classes.sectionDesktop}>
             {localStorage.getItem('token') ? (
               /*LOGOUT ICON*/
-              <IconButton aria-label='Log Out' color='inherit'>
-                <Tooltip title='Log Out' classes={classes} arrow>
-                  <ExitToAppIcon
-                    onClick={(e) => logoutHandler(e)}
-                    className={classes.largeIcon}
-                  />
-                </Tooltip>
+              <IconButton
+                onClick={(e) => logoutHandler(e)}
+                aria-label='Log Out'
+                color='inherit'
+              >
+                <ExitToAppIcon className={classes.largeIcon} />
               </IconButton>
             ) : null}
           </div>
