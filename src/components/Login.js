@@ -46,7 +46,6 @@ const Login = (props) => {
           value={username}
           onChange={(e) => {
             setUsername(e.target.value);
-            console.log(username);
           }}
         ></input>
         <input
@@ -56,7 +55,6 @@ const Login = (props) => {
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
-            console.log(password);
           }}
         ></input>
         {errorMsg ? (

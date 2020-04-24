@@ -50,7 +50,6 @@ const Register = (props) => {
           value={username}
           onChange={(e) => {
             setUsername(e.target.value);
-            console.log(username);
           }}
         ></input>
         <input
@@ -60,7 +59,6 @@ const Register = (props) => {
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
-            console.log(password);
           }}
         ></input>
         {errorMsg
