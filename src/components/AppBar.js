@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -65,7 +65,9 @@ export default function PrimarySearchAppBar(props) {
 
   const logoutHandler = (e) => {
     e.preventDefault();
+    console.log('local storage before clear', localStorage.getItem('token'));
     localStorage.clear();
+    console.log('local storage after clear', localStorage.getItem('token'));
     history.push('/');
   };
 
@@ -100,15 +102,20 @@ export default function PrimarySearchAppBar(props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {/*LOGOUT ICON*/}
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton aria-label='Log Out' color='inherit'>
-          <Tooltip title='Log Out' classes={classes} arrow>
-            <ExitToAppIcon className={classes.largeIcon} />
-          </Tooltip>
-        </IconButton>
-        <p>Logout</p>
-      </MenuItem>
+      {localStorage.getItem('token') ? (
+        /*LOGOUT ICON*/
+        <MenuItem onClick={handleProfileMenuOpen}>
+          <IconButton aria-label='Log Out' color='inherit'>
+            <Tooltip title='Log Out' classes={classes} arrow>
+              <ExitToAppIcon
+                onClick={(e) => logoutHandler(e)}
+                className={classes.largeIcon}
+              />
+            </Tooltip>
+          </IconButton>
+          <p>Logout</p>
+        </MenuItem>
+      ) : null}
     </Menu>
   );
 
@@ -130,15 +137,17 @@ export default function PrimarySearchAppBar(props) {
 
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {/*LOGOUT ICON*/}
-            <IconButton aria-label='Log Out' color='inherit'>
-              <Tooltip title='Log Out' classes={classes} arrow>
-                <ExitToAppIcon
-                  onClick={(e) => logoutHandler(e)}
-                  className={classes.largeIcon}
-                />
-              </Tooltip>
-            </IconButton>
+            {localStorage.getItem('token') ? (
+              /*LOGOUT ICON*/
+              <IconButton aria-label='Log Out' color='inherit'>
+                <Tooltip title='Log Out' classes={classes} arrow>
+                  <ExitToAppIcon
+                    onClick={(e) => logoutHandler(e)}
+                    className={classes.largeIcon}
+                  />
+                </Tooltip>
+              </IconButton>
+            ) : null}
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

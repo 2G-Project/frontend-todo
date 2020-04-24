@@ -1,15 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Todo from '../components/Todo';
-import AppBar from '../components/AppBar.js';
 import AddTodoForm from '../components/AddTodoForm';
-import {
-  Box,
-  Container,
-  Paper,
-  Toolbar,
-  Typography,
-  Button,
-} from '@material-ui/core';
+import { Box, Paper, Typography, Button } from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
@@ -106,7 +98,6 @@ const TodoList = (props) => {
   const deleteTodo = (id) => {
     const testURL = 'http://localhost:5000/api/';
     const token = localStorage.getItem('token');
-    const todosData = { todos };
 
     axios({
       url: `${testURL}todos/${id}`,
