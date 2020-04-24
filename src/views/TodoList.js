@@ -109,9 +109,8 @@ const TodoList = (props) => {
     const todosData = { todos };
 
     axios({
-      url: `${testURL}todos/delete`,
+      url: `${testURL}todos/${id}`,
       method: 'DELETE',
-      data: todosData,
       headers: {
         'Content-Type': 'application/json',
         Authorization: `${token}`,
